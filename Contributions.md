@@ -1,133 +1,120 @@
 # Contributions
 
-This document outlines my **technical** and **non-technical** contributions to the **PlanTopia graduation project**. From backend development and cloud integration to machine learning deployment and team collaboration, I played a key role in ensuring a robust and scalable solution.
+This document outlines my **technical** and **non-technical** contributions to the **PlanTopia graduation project**. From backend development and cloud integration to payment gateway setup and team collaboration, I played a key role in ensuring a robust and scalable solution.
 
 ---
 
 ## 📚 Table of Contents
 
-- [Technical Contributions](#technical-contributions)
-  - [Deployment & Hosting](#deployment--hosting)
-  - [Backend System (ASP.NET Core)](#backend-system-aspnet-core)
-    - [Authentication & Authorization](#authentication--authorization)
+- [Technical Contributions](#-technical-contributions)
+  - [Deployment & Hosting](#-deployment--hosting)
+  - [Backend System (ASP.NET Core)](#-backend-system-aspnet-core)
+    - [Plant Controller](#-plant-controller)
+    - [Task Controller](#-task-controller)
     - [User Operations](#user-operations)
-    - [Favorites Feature](#favorites-feature)
-    - [Ordering System](#ordering-system)
-    - [AWS Integration](#aws-integration)
-  - [Machine Learning Integration](#machine-learning-integration)
-    - [Dataset & Model Selection](#dataset--model-selection)
-    - [Model Fine-Tuning & Hosting](#model-fine-tuning--hosting)
-    - [Backend Integration](#backend-integration)
-  - [Project Structure & Design Patterns](#project-structure--design-patterns)
-- [Non-Technical Contributions](#non-technical-contributions)
+    - [Favorites Feature](#-favorites-feature)
+    - [Ordering System](#-ordering-system)
+    - [AWS Integration](#-aws-integration)
+    - [Stripe Payment Integration](#-stripe-payment-integration)
+  - [Project Structure & Design Patterns](#-project-structure--design-patterns)
+- [Non-Technical Contributions](#-non-technical-contributions)
 
 ---
 
+## 💻 Technical Contributions
 
-##  Technical Contributions
+### 🌐 Deployment & Hosting
 
-###  Deployment & Hosting
-
-- Responsible for **deploying and hosting** the entire web application using **Monster ASP.NET**.
-  - Chose Monster ASP.NET as a reliable and free hosting option suitable for our needs as students.
-  - It offered the flexibility and resources required to deploy a real-world ASP.NET Core project without incurring additional costs.
-- Handled **remote database deployment** and configuration for cloud access.
+- Me and Mohmed Reyad were Responsible for **deploying and hosting** the entire web application using **Monster ASP.NET**.
+  - Chose Monster ASP.NET as a reliable and free hosting option suitable for students.
+  - Configured remote SQL database for cloud accessibility.
 
 ---
 
-###  Backend System (ASP.NET Core)
+### ⚙ Backend System (ASP.NET Core)
 
-####  Authentication & Authorization
-
-- Fully implemented **authentication and authorization** using **JWT tokens**.
-- Supported role-based access control across the API for Admins, Workers, and Customers.
-
-####  User Operations
-
-- Developed endpoints for:
-  - **User registration**
-  - **Profile update**
-  - **User deletion** (including role-specific logic)
-- Used role resolution helper methods to correctly access sub-user tables (Admin, Worker, etc.)
-
-####  Favorites Feature
-
-- Implemented the **Favorites system**:
-  - Linked customers with their favorite plants via a many-to-many relationship.
-  - Handled adding, removing, and retrieving favorite items.
-
-####  Ordering System
-
-- Developed the full **Cart service**:
-  - Add/view items with quantity and subtotal logic.
-  - Created helper methods for user validation and cart initialization.
-- Built the **Order service**:
-  - Place, retrieve, and cancel orders.
-  - Automatically move items from cart to orders and clear the cart after checkout.
-  - Handled cancellation logic (only allowed for pending orders).
-
-####  AWS Integration
-
-- Integrated **AWS S3** for uploading and retrieving **user profile and plant images**.
-- Handled all related code logic to ensure robust error handling and path consistency.
+#### 🌱 Plant Controller  
+- Developed the **Plant Controller** to handle all plant-related operations.  
+- Implemented endpoints for:  
+  - **Adding new plants** with their details (name, description, price, etc.)  
+  - **Updating existing plant data** such as stock, pricing, and status.  
+  - **Retrieving plant lists** with filtering and searching options for better usability.  
+  - **Deleting plants** while ensuring data consistency.  
+- Integrated **AWS S3** for image upload, allowing plants to have associated images stored securely.  
+- Ensured **clean DTOs** for request/response to avoid over-fetching unnecessary data.  
 
 ---
 
-###  Machine Learning Integration
-
-####  Dataset & Model Selection
-
-- Conducted extensive research to select a suitable base model for plant disease classification.
-  - Initially explored [this Hugging Face model](https://huggingface.co/linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification), which is based on a **CNN architecture** and already trained on real-world images of plant diseases.
-    - We chose it as a starting point due to its lightweight design (**MobileNetV2**) and good performance on limited datasets.
-    - However, it only supported **38 disease classes**, which was insufficient for our project’s broader scope.
-  
-- To expand the model's classification capability, we searched for a larger, more comprehensive dataset and found a suitable one on Kaggle:
-  -  [Plant Disease Classification - Merged Dataset](https://www.kaggle.com/datasets/alinedobrovsky/plant-disease-classification-merged-dataset/data)
-    - This dataset contains approximately **90 disease classes**, covering a wider variety of plant species.
-    - It offered sufficient diversity and volume to fine-tune the base model and better align with the real-world needs of our system.
-
-####  Model Fine-Tuning & Hosting
-
-- Fine-tuned the **MobileNetV2 model** using the selected Kaggle dataset to significantly expand its classification capabilities.
-  - The fine-tuning process was time-consuming and required multiple iterations, but we successfully completed it — *Alhamdulillah*.
-  - We used **Lightning AI** to train the model, as it offers strong performance, efficient training pipelines, and provides **free GPU access for students**, which was ideal for our needs.
-
-- After training, we deployed the updated model to **Hugging Face Spaces**, creating a user-friendly interface where users can upload plant images and receive real-time predictions.
-  -  [PlanTopia Disease Detector on Hugging Face](https://huggingface.co/spaces/reyad7/PlanTopia-diseases-detector)
-
-#### Backend Integration
-
-- Developed a dedicated **.NET API endpoint** to integrate the deployed ML model into our backend.
-  - The endpoint accepts **image uploads from users** (e.g., photos of plants).
-  - It forwards the image to the **Hugging Face Space** hosting the fine-tuned model.
-  - The model processes the image and returns the predicted **plant disease name**.
-  - The result is then sent back through the API and displayed to the user within the application.
-
-- Ensured robust error handling and response formatting to provide a seamless experience between the backend and ML service.
+#### 👤 User Operations
+- Developed APIs for:
+  - **User registration & profile management**
+  - Profile image upload (linked with AWS S3)
+  - Proper role resolution for Customers/Admins/Workers.
 
 ---
 
-###  Project Structure & Design Patterns
+#### ✅ Task Controller  
+- Contributed to the **Task Controller** that manages nursery worker tasks.  
+- Helped in implementing:  
+  - **Creating and assigning tasks** (watering, pruning, maintenance) to workers.  
+  - **Retrieving daily/weekly tasks** for individual workers.  
+  - **Updating task status** (Pending → In Progress → Completed).  
+  - **Deleting or reassigning tasks** when needed.  
+- Ensured **role-based access** so only Admins can assign or modify worker tasks.  
+- Assisted in connecting **Task Controller** with the **Worker module**, ensuring seamless linking of tasks to specific workers.  
 
-To ensure **scalability**, **maintainability**, and **testability**, our backend was designed using a **clean, layered architecture**. We adopted a **union architecture** that combines the **Service-Repository pattern**, enforcing a clear **separation of concerns** and keeping the codebase modular and robust.
+---
 
-- The `API` layer contains only **interaction points** (Controllers), responsible for handling HTTP requests and responses.
-- The `Services` layer holds the **business logic** and acts as a bridge between controllers and the data layer.
-- The `Repository` layer abstracts direct database access, with:
-  - A **Generic Repository** to handle common CRUD operations.
-  - **Specific repositories** to manage domain-specific queries.
-- All repositories are coordinated using the **Unit of Work pattern**, ensuring atomic commits and better transaction management.
+#### ⭐ Favorites Feature
+- Designed the **Favorite Items service**:
+  - Customers can add/remove plants from their favorites list.
+  - Exposed lightweight endpoints requiring only plant ID for quick actions.
 
-This structure promotes:
-- **Code reuse** through generic components.
-- **Ease of testing** by isolating logic layers.
-- **Flexibility** for future scaling or integration needs.
+---
 
+#### 🛒 Ordering System
+- Created **Cart & Order services**:
+  - Add/view/update cart items
+  - Place orders, move cart items to orders
+  - Allow cancellation only for pending orders
+  - Updated order status workflow for better tracking (e.g., ORDERED → PROCESSING → DELIVERED)
 
-####  Solution Overview
+---
 
-```
+#### ☁ AWS Integration
+- Integrated **AWS S3** for storing:
+  - **Plant images**  
+  - **User profile images**  
+- Wrote reusable upload logic with robust error handling and S3 path management.
+
+---
+
+#### 💳 Stripe Payment Integration
+- Configured **Stripe payment gateway** to handle secure payments.
+  - Created payment sessions with dynamic order data.
+  - Used **Stripe webhooks** to confirm successful payments.
+  - Implemented failed-card handling and proper rollback logic.
+
+---
+
+## 🏗 Project Structure & Design Patterns
+
+To ensure **scalability**, **maintainability**, and **testability**, our backend was designed using a **clean layered architecture**.  
+
+We adopted a **Service-Repository pattern with Unit of Work**, enforcing a clear **separation of concerns** and keeping the codebase modular and robust.
+
+---
+
+### 🔄 **Design Patterns Used**
+- **Layered Architecture** → Clear division between API, Service, and Data layers.
+- **Repository Pattern** → Encapsulates database access, making it reusable.
+- **Unit of Work Pattern** → Groups multiple repository actions into a single transaction.
+- **DTO Pattern** → Ensures API requests/responses are clean and structured.
+
+---
+
+### 📂 **Solution Structure**
+
 PlanTopia Solution
 │
 ├── Api                                # Entry point of the application
@@ -166,10 +153,11 @@ PlanTopia Solution
 
 
 
-```
-####  Repository & Unit of Work Patterns
 
-```
+---
+
+### 🔄 **Repository & Unit of Work Structure**
+
 DAL
 │
 └── Repository
@@ -182,55 +170,50 @@ DAL
 ├── OrderRepository.cs
 └── UnitOfWork.cs
 
-```
 
-- **GenericRepository<T>** handles reusable CRUD and LINQ logic.
-- **UnitOfWork** coordinates all repositories and commits changes transactionally.
+✅ **Why this matters:**
+- Makes the system **easy to maintain** and extend.
+- Reduces code duplication through reusable components.
+- Improves **testability** by abstracting database dependencies.
+- Allows **atomic commits** across multiple repositories.
 
 ---
 
-##  Non-Technical Contributions
+## 🙌 Non-Technical Contributions
 
 ### 1. From Real-World Needs to a Viable Project Idea
+The journey began with a simple but insightful conversation. One of our team members, Abdelrahman Amer, had real-world experience working in a nursery. We quickly realized this space was full of inefficiencies and unaddressed needs — from poor task assignment to the absence of disease monitoring tools. After several discussions, we concluded that building a nursery management system with intelligent features would be both practical and meaningful. That was the seed of what became **PlanTopia**.
 
-The journey began with a simple but insightful conversation. One of our team members, Abdelrahman Amer, had real-world experience working in a nursery. We quickly realized that this space was full of inefficiencies and unaddressed needs — from poor task assignment to the absence of disease monitoring tools. After several discussions, we concluded that building a nursery management system with intelligent features would be not only practical but also meaningful. That was the seed of what became **PlanTopia**.
+---
 
 ### 2. Leading the Backend Team
-
-I took the lead role in the **backend development team**, ensuring our work was well-organized and aligned with the overall system architecture. My responsibility wasn’t limited to dividing tasks — it included:
+I helped the leader"Mohamed Reyad" in the **backend development team**, ensuring our work was well-organized and aligned with the overall system architecture. My responsibility wasn’t limited to dividing tasks — it included:
 - Assigning roles based on each team member’s strengths and interests.
 - Monitoring progress to ensure deadlines and technical quality were met.
 - Explaining tasks in detail so everyone understood *why* and *how* a component fits into the larger system.
-  
-My goal was to foster clarity, ownership, and collaboration — not just delegate.
+
+---
 
 ### 3. Supporting Team Members When It Mattered
-
-No project goes perfectly — and PlanTopia was no exception. There were times when some teammates couldn’t complete their tasks due to confusion or lack of time. When this happened, I stepped in to either:
-- Help them debug the issue and guide them step by step.
+When teammates struggled with tasks or time constraints, I stepped in to:
+- Help debug issues and guide them step by step.
 - Or take ownership of the task myself, ensuring we didn’t fall behind.
 
-This approach ensured continuity, avoided delays, and allowed everyone to learn and grow.
+---
 
 ### 4. Maintaining Team Energy & Momentum
+I often reminded the team of our goals and progress, keeping morale high and momentum strong through regular check-ins.
 
-I often played the role of the reminding the team of our goals and progress whenever things slowed down. Whether through checking in on our WhatsApp Group or speak to each one privately 
+---
 
 ### 5. Coordinating Across Technical Tracks
+Bridged the gap between **backend, frontend, and AWS services** to ensure seamless integration.
 
-As we had multiple technical areas — backend, machine learning, and frontend — I often found myself bridging the gap. I worked closely with both the ML team and the BackEnd team to:
-- Align backend endpoints with what frontend and ML expected.
-- Provide the needed data formats and payloads.
-- Quickly respond to integration bugs or edge cases.
-
-This ensured smoother handoffs and faster development cycles.
+---
 
 ### 6. Learning & Growing Together
+Encouraged **knowledge sharing**, shared tutorials, code snippets, and collaborative problem-solving.
 
-I encouraged **knowledge sharing** within the team by sharing tutorials,snippest codes examples or even search for info together whenever someone needed help. I also made sure to:
-- Learn from teammates in areas where they were stronger.
-- Stay supportive and collaborative throughout the journey.
-- Focus on learning by doing — even when mistakes happened.
+---
 
-
-This non-technical side of the journey was just as important as the code. It taught me leadership, communication, and problem-solving skills that I’ll carry long after graduation.
+This document reflects both the **code-level impact** I had on the project as well as my role in enabling a smooth, collaborative team journey.
