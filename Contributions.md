@@ -115,6 +115,7 @@ We adopted a **Service-Repository pattern with Unit of Work**, enforcing a clear
 
 ### 📂 **Solution Structure**
 
+```
 PlanTopia Solution
 │
 ├── Api                                # Entry point of the application
@@ -152,22 +153,22 @@ PlanTopia Solution
 │   └── Models                         # Core data models (User, Order, Plant, etc.)
 
 
----
 
-### 🔄 **Repository & Unit of Work Structure**
+```
+####  Repository & Unit of Work Patterns
 
+```
 DAL
 │
 └── Repository
-    ├── Interfaces
-    │   ├── IGenericRepository.cs
-    │   ├── IOrderRepository.cs
-    │   └── IUnitOfWork.cs
-    └── Implementations
-        ├── GenericRepository.cs
-        ├── OrderRepository.cs
-        └── UnitOfWork.cs
-
+├── Interfaces
+│ ├── IGenericRepository.cs
+│ ├── IOrderRepository.cs
+│ └── IUnitOfWork.cs
+└── Implementations
+├── GenericRepository.cs
+├── OrderRepository.cs
+└── UnitOfWork.cs
 
 ✅ **Why this matters:**
 - Makes the system **easy to maintain** and extend.
