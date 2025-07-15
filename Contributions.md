@@ -152,8 +152,6 @@ PlanTopia Solution
 │   └── Models                         # Core data models (User, Order, Plant, etc.)
 
 
-
-
 ---
 
 ### 🔄 **Repository & Unit of Work Structure**
@@ -161,14 +159,14 @@ PlanTopia Solution
 DAL
 │
 └── Repository
-├── Interfaces
-│ ├── IGenericRepository.cs
-│ ├── IOrderRepository.cs
-│ └── IUnitOfWork.cs
-└── Implementations
-├── GenericRepository.cs
-├── OrderRepository.cs
-└── UnitOfWork.cs
+    ├── Interfaces
+    │   ├── IGenericRepository.cs
+    │   ├── IOrderRepository.cs
+    │   └── IUnitOfWork.cs
+    └── Implementations
+        ├── GenericRepository.cs
+        ├── OrderRepository.cs
+        └── UnitOfWork.cs
 
 
 ✅ **Why this matters:**
